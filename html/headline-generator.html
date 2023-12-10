@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<form id="htmlForm">
+  <label><input type="checkbox" name="gitstatsArchetypes"> gitstats archetypes</label><br>
+  <label><input type="checkbox" name="gitstatsClient"> gitstats client</label><br>
+  <label><input type="checkbox" name="gitstatsMaps"> gitstats maps</label><br>
+  <label><input type="checkbox" name="gitstatsServer"> gitstats server</label><br>
+  <br>
+  <label><input type="checkbox" name="gitlogArchetypes"> gitlog archetypes</label><br>
+  <label><input type="checkbox" name="gitlogClient"> gitlog client</label><br>
+  <label><input type="checkbox" name="gitlogMaps"> gitlog maps</label><br>
+  <label><input type="checkbox" name="gitlogServer"> gitlog server</label><br>
+  <br>
+  <label><input type="checkbox" name="doxygenArchetypes"> doxygen archetypes</label><br>
+  <label><input type="checkbox" name="doxygenClient"> doxygen client</label><br>
+  <label><input type="checkbox" name="doxygenMaps"> doxygen maps</label><br>
+  <label><input type="checkbox" name="doxygenServer"> doxygen server</label><br>
+  <br>
+  <button type="button" onclick="generateHTML()">Generate HTML</button>
+</form>
+
+<hr>
+
+<h3>Rendered HTML (GitStats)</h3>
+<div id="renderedHTMLOriginal"></div>
+
+<hr>
+
+<h3>Raw HTML (GitStats)</h3>
+<pre id="rawHTMLOriginal"></pre>
+
+<hr>
+
+<h3>Rendered HTML (With ../)</h3>
+<div id="renderedHTMLWithDots"></div>
+
+<hr>
+
+<h3>Raw HTML (With ../)</h3>
+<pre id="rawHTMLWithDots"></pre>
+
+<hr>
+
+<h3>Rendered HTML (With ../../)</h3>
+<div id="renderedHTMLWithDoubleDots"></div>
+
+<hr>
+
+<h3>Raw HTML (With ../../)</h3>
+<pre id="rawHTMLWithDoubleDots"></pre>
+
+<hr>
+
+<h3>Rendered HTML (gitlog)</h3>
+<div id="renderedHTMLGitLog"></div>
+
+<hr>
+
+<h3>Raw HTML (gitlog)</h3>
+<pre id="rawHTMLGitLog"></pre>
+
+<hr>
+
+<h3>Rendered HTML (With ../ for gitlog)</h3>
+<div id="renderedHTMLGitLogWithDots"></div>
+
+<hr>
+
+<h3>Raw HTML (With ../ for gitlog)</h3>
+<pre id="rawHTMLGitLogWithDots"></pre>
+
+<hr>
+
+<h3>Rendered HTML (With ../../ for gitlog)</h3>
+<div id="renderedHTMLGitLogWithDoubleDots"></div>
+
+<hr>
+
+<h3>Raw HTML (With ../../ for gitlog)</h3>
+<pre id="rawHTMLGitLogWithDoubleDots"></pre>
+
+<hr>
+
+<h3>Rendered HTML (Doxygen)</h3>
+<div id="renderedHTMLDoxygen"></div>
+
+<hr>
+
+<h3>Raw HTML (Doxygen)</h3>
+<pre id="rawHTMLDoxygen"></pre>
+
+<hr>
+
+<h3>Rendered HTML (With ../ for Doxygen)</h3>
+<div id="renderedHTMLDoxygenWithDots"></div>
+
+<hr>
+
+<h3>Raw HTML (With ../ for Doxygen)</h3>
+<pre id="rawHTMLDoxygenWithDots"></pre>
+
+<hr>
+
+<h3>Rendered HTML (With ../../ for Doxygen)</h3>
+<div id="renderedHTMLDoxygenWithDoubleDots"></div>
+
+<hr>
+
+<h3>Raw HTML (With ../../ for Doxygen)</h3>
+<pre id="rawHTMLDoxygenWithDoubleDots"></pre>
+
+<script>
+  function generateHTML() {
+    const categories = [
+      { name: 'archetypes', path: 'crossfire-crossfire-arch' },
+      { name: 'client', path: 'crossfire-crossfire-client' },
+      { name: 'maps', path: 'crossfire-crossfire-maps' },
+      { name: 'server', path: 'crossfire-crossfire-server' }
+    ];
+
+    const selectedCategoriesGitStats = categories.filter(category => {
+      return document.querySelector(`[name=gitstats${category.name.charAt(0).toUpperCase() + category.name.slice(1)}]`).checked;
+    });
+
+    // Original HTML
+    const originalHTMLSections = selectedCategoriesGitStats.map(category => {
+      return `<a href="git/${category.path}/gitstats/index.html">${category.name.charAt(0).toUpperCase() + category.name.slice(1)}</a>, `;
+    });
+
+    const renderedHTMLOriginal = `<li><a href="git/gitstats/index.html">GitStats</a> update for ${originalHTMLSections.join('').slice(0, -2)}</li>`;
+    const rawHTMLOriginal = `<li><a href="git/gitstats/index.html">GitStats</a> update for ${originalHTMLSections.join('').slice(0, -2)}</li>`;
+
+    // HTML with ../
+    const htmlSectionsWithDots = selectedCategoriesGitStats.map(category => {
+      return `<a href="../git/${category.path}/gitstats/index.html">${category.name.charAt(0).toUpperCase() + category.name.slice(1)}</a>, `;
+    });
+
+    const renderedHTMLWithDots = `<li><a href="../git/gitstats/index.html">GitStats</a> update for ${htmlSectionsWithDots.join('').slice(0, -2)}</li>`;
+    const rawHTMLWithDots = `<li><a href="../git/gitstats/index.html">GitStats</a> update for ${htmlSectionsWithDots.join('').slice(0, -2)}</li>`;
+
+    // HTML with ../../
+    const htmlSectionsWithDoubleDots = selectedCategoriesGitStats.map(category => {
+      return `<a href="../../git/${category.path}/gitstats/index.html">${category.name.charAt(0).toUpperCase() + category.name.slice(1)}</a>, `;
+    });
+
+    const renderedHTMLWithDoubleDots = `<li><a href="../../git/gitstats/index.html">GitStats</a> update for ${htmlSectionsWithDoubleDots.join('').slice(0, -2)}</li>`;
+    const rawHTMLWithDoubleDots = `<li><a href="../../git/gitstats/index.html">GitStats</a> update for ${htmlSectionsWithDoubleDots.join('').slice(0, -2)}</li>`;
+
+    // GitLog HTML
+    const selectedCategoriesGitLog = categories.filter(category => {
+      return document.querySelector(`[name=gitlog${category.name.charAt(0).toUpperCase() + category.name.slice(1)}]`).checked;
+    });
+
+    const htmlSectionsGitLog = selectedCategoriesGitLog.map(category => {
+      return `<a href="git/${category.path}/gitlog/index.html">${category.name.charAt(0).toUpperCase() + category.name.slice(1)}</a>, `;
+    });
+
+    const renderedHTMLGitLog = `<li><a href="git/gitlog/index.html">GitLog</a> update for ${htmlSectionsGitLog.join('').slice(0, -2)}</li>`;
+    const rawHTMLGitLog = `<li><a href="git/gitlog/index.html">GitLog</a> update for ${htmlSectionsGitLog.join('').slice(0, -2)}</li>`;
+
+    // HTML with ../ for GitLog
+    const htmlSectionsGitLogWithDots = selectedCategoriesGitLog.map(category => {
+      return `<a href="../git/${category.path}/gitlog/index.html">${category.name.charAt(0).toUpperCase() + category.name.slice(1)}</a>, `;
+    });
+
+    const renderedHTMLGitLogWithDots = `<li><a href="../git/gitlog/index.html">GitLog</a> update for ${htmlSectionsGitLogWithDots.join('').slice(0, -2)}</li>`;
+    const rawHTMLGitLogWithDots = `<li><a href="../git/gitlog/index.html">GitLog</a> update for ${htmlSectionsGitLogWithDots.join('').slice(0, -2)}</li>`;
+
+    // HTML with ../../ for GitLog
+    const htmlSectionsGitLogWithDoubleDots = selectedCategoriesGitLog.map(category => {
+      return `<a href="../../git/${category.path}/gitlog/index.html">${category.name.charAt(0).toUpperCase() + category.name.slice(1)}</a>, `;
+    });
+
+    const renderedHTMLGitLogWithDoubleDots = `<li><a href="../../git/gitlog/index.html">GitLog</a> update for ${htmlSectionsGitLogWithDoubleDots.join('').slice(0, -2)}</li>`;
+    const rawHTMLGitLogWithDoubleDots = `<li><a href="../../git/gitlog/index.html">GitLog</a> update for ${htmlSectionsGitLogWithDoubleDots.join('').slice(0, -2)}</li>`;
+
+    // Doxygen HTML
+    const selectedCategoriesDoxygen = categories.filter(category => {
+      return document.querySelector(`[name=doxygen${category.name.charAt(0).toUpperCase() + category.name.slice(1)}]`).checked;
+    });
+
+    const htmlSectionsDoxygen = selectedCategoriesDoxygen.map(category => {
+      return `<a href="code/${category.path}/html/index.html">${category.name.charAt(0).toUpperCase() + category.name.slice(1)}</a>, `;
+    });
+
+    const renderedHTMLDoxygen = `<li><a href="code/index.html">Doxygen</a> update for ${htmlSectionsDoxygen.join('').slice(0, -2)}</li>`;
+    const rawHTMLDoxygen = `<li><a href="code/index.html">Doxygen</a> update for ${htmlSectionsDoxygen.join('').slice(0, -2)}</li>`;
+
+    // HTML with ../ for Doxygen
+    const htmlSectionsDoxygenWithDots = selectedCategoriesDoxygen.map(category => {
+      return `<a href="../code/${category.path}/index.html">${category.name.charAt(0).toUpperCase() + category.name.slice(1)}</a>, `;
+    });
+
+    const renderedHTMLDoxygenWithDots = `<li><a href="../code/index.html">Doxygen</a> update for ${htmlSectionsDoxygenWithDots.join('').slice(0, -2)}</li>`;
+    const rawHTMLDoxygenWithDots = `<li><a href="../code/index.html">Doxygen</a> update for ${htmlSectionsDoxygenWithDots.join('').slice(0, -2)}</li>`;
+
+    // HTML with ../../ for Doxygen
+    const htmlSectionsDoxygenWithDoubleDots = selectedCategoriesDoxygen.map(category => {
+      return `<a href="../../code/${category.path}/html/index.html">${category.name.charAt(0).toUpperCase() + category.name.slice(1)}</a>, `;
+    });
+
+    const renderedHTMLDoxygenWithDoubleDots = `<li><a href="../../code/index.html">Doxygen</a> update for ${htmlSectionsDoxygenWithDoubleDots.join('').slice(0, -2)}</li>`;
+    const rawHTMLDoxygenWithDoubleDots = `<li><a href="../../code/index.html">Doxygen</a> update for ${htmlSectionsDoxygenWithDoubleDots.join('').slice(0, -2)}</li>`;
+
+    document.getElementById('renderedHTMLOriginal').innerHTML = renderedHTMLOriginal;
+    document.getElementById('rawHTMLOriginal').textContent = rawHTMLOriginal;
+    document.getElementById('renderedHTMLWithDots').innerHTML = renderedHTMLWithDots;
+    document.getElementById('rawHTMLWithDots').textContent = rawHTMLWithDots;
+    document.getElementById('renderedHTMLWithDoubleDots').innerHTML = renderedHTMLWithDoubleDots;
+    document.getElementById('rawHTMLWithDoubleDots').textContent = rawHTMLWithDoubleDots;
+    document.getElementById('renderedHTMLGitLog').innerHTML = renderedHTMLGitLog;
+    document.getElementById('rawHTMLGitLog').textContent = rawHTMLGitLog;
+    document.getElementById('renderedHTMLGitLogWithDots').innerHTML = renderedHTMLGitLogWithDots;
+    document.getElementById('rawHTMLGitLogWithDots').textContent = rawHTMLGitLogWithDots;
+    document.getElementById('renderedHTMLGitLogWithDoubleDots').innerHTML = renderedHTMLGitLogWithDoubleDots;
+    document.getElementById('rawHTMLGitLogWithDoubleDots').textContent = rawHTMLGitLogWithDoubleDots;
+    document.getElementById('renderedHTMLDoxygen').innerHTML = renderedHTMLDoxygen;
+    document.getElementById('rawHTMLDoxygen').textContent = rawHTMLDoxygen;
+    document.getElementById('rawHTMLDoxygenWithDots').textContent = rawHTMLDoxygenWithDots;
+    document.getElementById('renderedHTMLDoxygenWithDots').innerHTML = renderedHTMLDoxygenWithDots;
+    document.getElementById('rawHTMLDoxygenWithDoubleDots').textContent = rawHTMLDoxygenWithDoubleDots;
+    document.getElementById('renderedHTMLDoxygenWithDoubleDots').innerHTML = renderedHTMLDoxygenWithDoubleDots;
+  }
+</script>
+
+</body>
+</html>
