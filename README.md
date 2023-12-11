@@ -18,8 +18,7 @@ The web pages are self contained in that the necessary html elements and javascr
 
 ## Screenshot
 
-WIP - not available.
-
+![Crossfire News Headline interface image](images/crossfire-headline-generator.png)
 
 ## Live Web Page
 
