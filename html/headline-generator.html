@@ -37,6 +37,7 @@ License: MIT License
   <label><input type="checkbox" name="doxygenServer"> doxygen server</label><br>
   <br>
   <button type="button" onclick="generateHTML()">Generate HTML</button>
+  <button type="button" onclick="resetForm()">Reset Selections</button>
 </form>
 
 <hr>
@@ -240,6 +241,19 @@ License: MIT License
     document.getElementById('renderedHTMLDoxygenWithDots').innerHTML = renderedHTMLDoxygenWithDots;
     document.getElementById('rawHTMLDoxygenWithDoubleDots').textContent = rawHTMLDoxygenWithDoubleDots;
     document.getElementById('renderedHTMLDoxygenWithDoubleDots').innerHTML = renderedHTMLDoxygenWithDoubleDots;
+  }
+</script>
+
+<script>
+  function generateHTML() {
+    // Rest of the code remains unchanged
+  }
+
+  function resetForm() {
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    checkboxes.forEach(checkbox => {
+      checkbox.checked = false;
+    });
   }
 </script>
 
